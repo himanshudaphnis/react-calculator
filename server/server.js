@@ -9,7 +9,7 @@ function requestHandler(request, response) {
         '../public',
         url.parse(request.url).pathname
     );
-    fs.exists(requestedResoruce, function(exists) {
+    fs.exists(requestedResource, function(exists) {
         if(!exists) {
             response.writeHead(404, {"Content-Type": "text/plain"});
             response.write("404 Not Found\n");
@@ -23,7 +23,7 @@ function requestHandler(request, response) {
         }
 
         fs.readFile(
-            requestResource,
+            requestedResource,
             "binary",
             function(err, file) {
                 if(err) {
@@ -41,7 +41,7 @@ function requestHandler(request, response) {
 
                 const headers = {};
                 const contentType = contentTypeByExtension[
-                    path.extname(requestResource)
+                    path.extname(requestedResource)
                 ];
                 if(contentType) {
                     headers["Content-Type"] = contentType;
@@ -53,3 +53,9 @@ function requestHandler(request, response) {
             });
     });
 }
+
+const server = http.createServer(requestHandler);
+const portNumber = 3030;
+server.listen(portNumber, function() {
+    console.log("Server listening on port  ${portNumber}");
+})
