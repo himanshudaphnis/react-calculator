@@ -19,7 +19,7 @@ function requestHandler(request, response) {
         }
 
         if(fs.statSync(requestResource).isDirectory()) {
-            requestResponse +='index.html';
+            requestResponse +='/index.html';
         }
 
         fs.readFile(
