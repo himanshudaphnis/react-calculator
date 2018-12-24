@@ -15,11 +15,10 @@ function requestHandler(request, response) {
             response.write("404 Not Found\n");
             response.end();
             return;
-
         }
 
-        if(fs.statSync(requestResource).isDirectory()) {
-            requestResponse +='/index.html';
+        if(fs.statSync(requestedResource).isDirectory()) {
+            requestedResource +='/index.html';
         }
 
         fs.readFile(
@@ -33,7 +32,7 @@ function requestHandler(request, response) {
                     return;
                 }
 
-                const contentTypeByExtension  = {
+                const contentTypeByExtension = {
                     '.html': "text/html",
                     '.css': "text/css",
                     '.js': "text/javascript"
@@ -57,5 +56,5 @@ function requestHandler(request, response) {
 const server = http.createServer(requestHandler);
 const portNumber = 3030;
 server.listen(portNumber, function() {
-    console.log("Server listening on port  ${portNumber}");
+    console.log(`server listening on port  ${portNumber}`);
 })
